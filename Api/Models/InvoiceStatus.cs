@@ -3,8 +3,7 @@
     public class InvoiceStatus
     {
         public int id { get; set; }
-        public int Name { get; set; } // draft, issued, cancelled
-        public int isMainStore { get; set; }
-        IList<User> Users { get; set; }
+        public string Name { get; set; } // draft, issued, cancelled
+        IList<Invoice> Invoices { get; set; }
     }
 }

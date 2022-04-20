@@ -1,3 +1,7 @@
+using Api;
+using Api.Repo;
+using Api.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<Context>();  // add ef context
+// inteface matchs
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+
 
 var app = builder.Build();
 
@@ -22,4 +31,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+alicakil ali = new alicakil();
+ali.CreateDatabase();
+
 app.Run();
+
