@@ -7,40 +7,38 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class CustomerController : ControllerBase
     {
-        Context c;
-        IUserRepo _users;
+        ICustomerRepo _Customers;
 
-        public UserController(IUserRepo users)
+        public CustomerController(ICustomerRepo Customers)
         {
-            c = new Context();
-            _users = users;
+            _Customers = Customers;
         }
 
 
 
-        [HttpGet("GetUsers")]
-        public async Task<IActionResult>GetUsers()
+        [HttpGet("GetCustomers")]
+        public async Task<IActionResult>GetCustomers()
         {
-             return Ok(await _users.GetUsersAsync());
+             return Ok(await _Customers.GetCustomersAsync());
         }
 
-        [HttpGet("GetUsers/{id}")]
-        public async Task<IActionResult> GetUserById(int id)
+        [HttpGet("GetCustomers/{id}")]
+        public async Task<IActionResult> GetCustomerById(int id)
         {
-            return Ok(await _users.GetByIdAsnc(id));
+            return Ok(await _Customers.GetByIdAsnc(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(User user)
+        public async Task<IActionResult> CreateCustomer(Customer Customer)
         {
             try
             {
-                if (string.IsNullOrEmpty(user.Name))
+                if (string.IsNullOrEmpty(Customer.Name))
                     return BadRequest("name can not be empty");
                
-                return Ok(await _users.CreateUserAsync(user));
+                return Ok(await _Customers.CreateCustomerAsync(Customer));
             }
             catch (Exception ex)
             {

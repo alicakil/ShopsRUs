@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Models
 {
-    public class User
+    public class Customer : BaseTable
     {
+        [Key]
         public int id { get; set; }
 
         [StringLength(100)]
         [Required]
-        [DisplayName("User Name & Surname")]
+        [DisplayName("Customer Name & Surname")]
         public string Name { get; set; }
         
         [Required]
@@ -19,8 +20,9 @@ namespace Api.Models
             ErrorMessage = "Please enter a valid password!")]
         public string Password { get; set; }
 
-        public int? Storeid { get; set; }
-        public Store? Store { get; set; }
+        public int? TypeId { get; set; }
+
+        public CustomerType? Type { get; set; } 
 
         IList<Invoice> Invoices { get; set; }
     }

@@ -3,30 +3,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Repo
 {
-    public class UserRepo : IUserRepo
+    public class CustomerRepo : ICustomerRepo
     {
         private readonly Context _context;
 
-        public UserRepo(Context context)
+        public CustomerRepo(Context context)
         {
             this._context = context;
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<Customer> CreateCustomerAsync(Customer Customer)
         {
-            _context.Add(user);
+            _context.Add(Customer);
             await _context.SaveChangesAsync();
-            return user;
+            return Customer;
         }
 
-        public async Task<User> GetByIdAsnc(int id)
+        public async Task<Customer> GetByIdAsnc(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x=>x.id == id);
+            return await _context.Customers.FirstOrDefaultAsync(x=>x.id == id);
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<List<Customer>> GetCustomersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Customers.ToListAsync();
         }
     }
 }

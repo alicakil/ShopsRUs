@@ -25,14 +25,18 @@ namespace Api
                 c.InvoicesStatus.Add(new InvoiceStatus() { Name = "draft" });
                 c.InvoicesStatus.Add(new InvoiceStatus() { Name = "issued" });
                 c.InvoicesStatus.Add(new InvoiceStatus() { Name = "cancelled" });
+                c.SaveChanges();
 
-                c.Stores.Add(new Store() { Name = "Main Store (ShopsRUs)", isMainStore = true });
-                c.Stores.Add(new Store() { Name = "Some Other Store 1", isMainStore = false });
-                c.Stores.Add(new Store() { Name = "Some Other Store 2", isMainStore = false });
+                c.CustomerTypes.Add(new CustomerType() { Name= "employee of the store" });
+                c.CustomerTypes.Add(new CustomerType() { Name= "affiliate of the store" });
+                c.SaveChanges();
 
-                c.Users.Add(new User() { Name="user1", Storeid = 1  });  // Employee of the main store
-                c.Users.Add(new User() { Name="user2", Storeid = 2  });  // Employee of an other store
-                c.Users.Add(new User() { Name="user3", Storeid = null  });  // no employer, such as public user
+                c.Customers.Add(new Customer() { Name="Customer1", Password = "pass123123", TypeId = 1 });  // Employee of the main store
+                c.Customers.Add(new Customer() { Name="Customer2", Password = "pass123123", TypeId = 2 });  // Employee of an other store
+                c.Customers.Add(new Customer() { Name="Customer3", Password = "pass123123" });  // Not categorized
+                c.SaveChanges();
+
+                c.Invoices.Add(new Invoice() { Ammount=1000, Discounted=1000, Customerid=1, Statusid= InvoiceStatus.draft }); // sample invoce record
                 c.SaveChanges();
 
             }

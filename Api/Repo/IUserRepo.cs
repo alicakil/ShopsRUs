@@ -2,10 +2,10 @@
 
 namespace Api.Repo
 {
-    public interface IUserRepo
+    public interface ICustomerRepo
     {
-        public Task<List<User>> GetUsersAsync();
-        public Task<User> GetByIdAsnc(int id);
-        public Task<User> CreateUserAsync(User user);
+        public Task<List<Customer>> GetCustomersAsync();
+        public Task<Customer> GetByIdAsnc(int id);
+        public Task<Customer> CreateCustomerAsync(Customer Customer);
     }
 }

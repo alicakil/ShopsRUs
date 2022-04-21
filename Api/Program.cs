@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Context>();  // add ef context
 // inteface matchs
-builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 
 
 var app = builder.Build();

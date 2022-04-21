@@ -10,9 +10,11 @@ namespace Api.Models
             optionsBuilder.UseSqlServer(@"Data Source=ALI\SQLEXPRESS15;Initial Catalog=ShopsRUs;Integrated Security=True; Connection Timeout=60");
         }
 
-        public DbSet<User> Users { get; set; }
+        
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerType> CustomerTypes { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceStatus> InvoicesStatus { get; set; }
-        public DbSet<Store> Stores { get; set; }
+
     }
 }
