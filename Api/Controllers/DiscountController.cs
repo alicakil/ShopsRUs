@@ -11,36 +11,47 @@ namespace Api.Controllers
     public class DiscountController : ControllerBase
     {
         ICustomerRepo _Customers;
+        ILogger<DiscountController> _logger;
 
-        public DiscountController(ICustomerRepo Customers)
+        public DiscountController(ICustomerRepo Customers, ILogger<DiscountController> logger)
         {
             _Customers = Customers;
+            _logger = logger;
         }
 
 
         [HttpGet("CreateBill")]
         public IActionResult CreateBill(int Customerid, double billAmmount)
         {
-            Context c = new Context();
-            Customer customer = c.Customers.FirstOrDefault(x => x.id == Customerid);
+            try
+            {
+                _logger.LogInformation(LogCategory.Start, "CreateBill triggered, Customerid:" + Customerid + ", billAmmount:" + billAmmount);
 
-            if (customer == null)
-                return NotFound("Customer not found");
+                Context c = new Context();
+                Customer customer = _Customers.GetById(Customerid);
 
-            Invoice invoice = new Invoice();
-            invoice.Customerid = Customerid;
-            invoice.Ammount = billAmmount;
-            invoice.Discounted = GetDiscount(customer, billAmmount); // Calculate the discount
-            invoice.Statusid = InvoiceStatus.draft;
+                if (customer == null)
+                    return NotFound("Customer not found");
 
-            c.Invoices.Add(invoice);
-            c.SaveChanges();
+                Invoice invoice = new Invoice();
+                invoice.Customerid = Customerid;
+                invoice.Ammount = billAmmount;
+                invoice.Discounted = GetDiscount(customer, billAmmount); // Calculate the discount
+                invoice.Statusid = InvoiceStatus.draft;
 
-            return Ok(InvoiceVM.GetViewModel(invoice, "Bill created succesfully!"));
+                c.Invoices.Add(invoice);
+                c.SaveChanges();
+
+                return Ok(InvoiceVM.GetViewModel(invoice, "Bill created succesfully!"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(LogCategory.ExceptionError, "CreateBill, error:" + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+           
         }
 
-
-        
 
         
 
@@ -53,13 +64,22 @@ namespace Api.Controllers
             Customer customer = c.Customers.FirstOrDefault(x => x.id== invoice.Customerid);
 
             if (invoice == null)
+            {
+                _logger.LogWarning(LogCategory.NullWarning, "UpdateBillAmount, invoice not found, invoiceid:" + invoiceid);
                 return NotFound("invoice not found");
+            }
+               
 
             if (customer == null)
+            {
+                _logger.LogWarning(LogCategory.NullWarning, "UpdateBillAmount, customer not found, invoiceid:" + invoice.Customerid);
                 return NotFound("customer not found");
+            }
+                
 
             if (invoice.Statusid != InvoiceStatus.draft)
             {
+                _logger.LogWarning(LogCategory.InvalidInputWarning, "UpdateBillAmount, You can update an invoice if it is in draft status only!");
                 return UnprocessableEntity("You can update an invoice if it is in draft status only!");
             }
 
@@ -69,6 +89,7 @@ namespace Api.Controllers
             c.Invoices.Update(invoice);
             c.SaveChanges();
 
+            _logger.LogInformation("Bill updated succesfully! invid:" + invoice.Id);
             return Ok(InvoiceVM.GetViewModel(invoice, "Bill updated succesfully!"));
         }
 
@@ -118,20 +139,61 @@ namespace Api.Controllers
 
 
 
+        interface IDiscount
+        {
+            double GetDiscount(double billAmmount);
+        }
+
+
+        class AnEmployeeDiscount : IDiscount
+        {
+            public double GetDiscount(double billAmmount)
+            {
+                return billAmmount * 0.7;  // 30% discount
+            }
+        }
+
+
+        class AnAffiateDiscount : IDiscount
+        {
+            public double GetDiscount(double billAmmount)
+            {
+                return billAmmount * 0.9;  // 10% discount
+            }
+        }
+
+        class OldCustomerDiscount : IDiscount
+        {
+            public double GetDiscount(double billAmmount)
+            {
+                return billAmmount * 0.95;  // 5% discount
+            }
+        }
+
         [NonAction]
         double GetDiscount(Customer customer, double billAmmount)
         {
             double discounted = 0;
 
-            if (customer.TypeId == CustomerType.AnEmployee)
-                discounted =  billAmmount * 0.7;  // Employee of the main store
+            IDiscount Idiscount;
 
+            if (customer.TypeId == CustomerType.AnEmployee)
+            {
+                Idiscount = new AnEmployeeDiscount();
+                discounted = Idiscount.GetDiscount(billAmmount);
+            }
             else if (customer.TypeId == CustomerType.AnAffiate)
-                discounted =  billAmmount * 0.9;  // Employee of an affiliate store
+            {
+                Idiscount = new AnAffiateDiscount();
+                discounted = Idiscount.GetDiscount(billAmmount);
+            }
             else
             {
                 if (customer.CreateTime < DateTime.Now.AddYears(-2)) // this is an old customer : 5% discount
-                    discounted = billAmmount * 0.95;
+                {
+                    Idiscount = new OldCustomerDiscount();
+                    discounted = Idiscount.GetDiscount(billAmmount);
+                }
                 else
                     discounted = billAmmount;  //  no discount
             }

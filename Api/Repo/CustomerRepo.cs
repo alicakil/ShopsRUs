@@ -12,21 +12,21 @@ namespace Api.Repo
             this._context = context;
         }
 
-        public async Task<Customer> CreateCustomerAsync(Customer Customer)
+        public Customer CreateCustomer(Customer Customer)
         {
             _context.Add(Customer);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return Customer;
         }
 
-        public async Task<Customer> GetByIdAsnc(int id)
+        public Customer GetById(int id)
         {
-            return await _context.Customers.FirstOrDefaultAsync(x=>x.id == id);
+            return _context.Customers.FirstOrDefault(x=>x.id == id);
         }
 
-        public async Task<List<Customer>> GetCustomersAsync()
+        public List<Customer> GetCustomers()
         {
-            return await _context.Customers.ToListAsync();
+            return _context.Customers.ToList();
         }
     }
 }
