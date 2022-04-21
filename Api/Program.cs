@@ -12,8 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Context>();  // add ef context
+
 // inteface matchs
 builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
 
 
 var app = builder.Build();

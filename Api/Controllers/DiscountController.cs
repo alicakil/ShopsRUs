@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Models;
 using Api.Repo;
 using Api.ViewModels;
+using Api.BusinessLogic;
 
 namespace Api.Controllers
 {
@@ -11,16 +12,18 @@ namespace Api.Controllers
     public class DiscountController : ControllerBase
     {
         ICustomerRepo _Customers;
+        IInvoiceRepo _Invoices;
         ILogger<DiscountController> _logger;
 
-        public DiscountController(ICustomerRepo Customers, ILogger<DiscountController> logger)
+        public DiscountController(ICustomerRepo Customers, IInvoiceRepo invoiceRepo, ILogger<DiscountController> logger)
         {
             _Customers = Customers;
+            _Invoices = invoiceRepo;
             _logger = logger;
         }
 
 
-        [HttpGet("CreateBill")]
+        [HttpPost("CreateBill")]
         public IActionResult CreateBill(int Customerid, double billAmmount)
         {
             try
@@ -33,14 +36,14 @@ namespace Api.Controllers
                 if (customer == null)
                     return NotFound("Customer not found");
 
+
                 Invoice invoice = new Invoice();
                 invoice.Customerid = Customerid;
                 invoice.Ammount = billAmmount;
-                invoice.Discounted = GetDiscount(customer, billAmmount); // Calculate the discount
+                invoice.Discounted = DiscountLogic.GetDiscount(customer, billAmmount); // Calculate the discount
                 invoice.Statusid = InvoiceStatus.draft;
 
-                c.Invoices.Add(invoice);
-                c.SaveChanges();
+                _Invoices.Create(invoice);
 
                 return Ok(InvoiceVM.GetViewModel(invoice, "Bill created succesfully!"));
             }
@@ -55,13 +58,13 @@ namespace Api.Controllers
 
         
 
-        [HttpGet("UpdateBillAmount")]
+        [HttpPut("UpdateBillAmount")]
         public IActionResult UpdateBillAmount(int invoiceid, double billAmmount)
         {
             Context c = new Context();
 
-            Invoice invoice = c.Invoices.FirstOrDefault(x => x.Id == invoiceid);
-            Customer customer = c.Customers.FirstOrDefault(x => x.id== invoice.Customerid);
+            Invoice invoice = _Invoices.GetById(invoiceid);
+            Customer customer = _Customers.GetById(invoice.Customerid);
 
             if (invoice == null)
             {
@@ -84,16 +87,15 @@ namespace Api.Controllers
             }
 
             invoice.Ammount = billAmmount;
-            invoice.Discounted = GetDiscount(customer, billAmmount);
+            invoice.Discounted = DiscountLogic.GetDiscount(customer, billAmmount);
 
-            c.Invoices.Update(invoice);
-            c.SaveChanges();
+            _Invoices.Update(invoice);
 
             _logger.LogInformation("Bill updated succesfully! invid:" + invoice.Id);
             return Ok(InvoiceVM.GetViewModel(invoice, "Bill updated succesfully!"));
         }
 
-        [HttpGet("IssueBill")]
+        [HttpPut("IssueBill")]
         public IActionResult IssueBill(int Invoiceid)
         {
             Context c = new Context();
@@ -110,19 +112,19 @@ namespace Api.Controllers
                 return UnprocessableEntity("This invoice is cancelled. Please a create new one!");
 
             invoice.Statusid = InvoiceStatus.issued;
-            c.Invoices.Update(invoice);
-            c.SaveChanges();
+
+            _Invoices.Update(invoice);
 
             return Ok(InvoiceVM.GetViewModel(invoice, "Bill issued succesfully!"));
         }
 
 
-        [HttpGet("CancelBill")]
+        [HttpPut("CancelBill")]
         public IActionResult CancelBill(int Invoiceid)
         {
             Context c = new Context();
 
-            Invoice invoice = c.Invoices.FirstOrDefault(x => x.Id == Invoiceid);
+            Invoice invoice = _Invoices.GetById(Invoiceid);
 
             if (invoice == null)
                 return NotFound("Customer not found");
@@ -131,78 +133,14 @@ namespace Api.Controllers
                 return UnprocessableEntity("The invoice is not issued to be canceled!");
 
             invoice.Statusid = InvoiceStatus.cancelled;
-            c.Invoices.Update(invoice);
-            c.SaveChanges();
+
+            _Invoices.Update(invoice);
 
             return Ok(InvoiceVM.GetViewModel(invoice, "Bill cancelled succesfully!"));
         }
 
 
 
-        interface IDiscount
-        {
-            double GetDiscount(double billAmmount);
-        }
-
-
-        class AnEmployeeDiscount : IDiscount
-        {
-            public double GetDiscount(double billAmmount)
-            {
-                return billAmmount * 0.7;  // 30% discount
-            }
-        }
-
-
-        class AnAffiateDiscount : IDiscount
-        {
-            public double GetDiscount(double billAmmount)
-            {
-                return billAmmount * 0.9;  // 10% discount
-            }
-        }
-
-        class OldCustomerDiscount : IDiscount
-        {
-            public double GetDiscount(double billAmmount)
-            {
-                return billAmmount * 0.95;  // 5% discount
-            }
-        }
-
-        [NonAction]
-        double GetDiscount(Customer customer, double billAmmount)
-        {
-            double discounted = 0;
-
-            IDiscount Idiscount;
-
-            if (customer.TypeId == CustomerType.AnEmployee)
-            {
-                Idiscount = new AnEmployeeDiscount();
-                discounted = Idiscount.GetDiscount(billAmmount);
-            }
-            else if (customer.TypeId == CustomerType.AnAffiate)
-            {
-                Idiscount = new AnAffiateDiscount();
-                discounted = Idiscount.GetDiscount(billAmmount);
-            }
-            else
-            {
-                if (customer.CreateTime < DateTime.Now.AddYears(-2)) // this is an old customer : 5% discount
-                {
-                    Idiscount = new OldCustomerDiscount();
-                    discounted = Idiscount.GetDiscount(billAmmount);
-                }
-                else
-                    discounted = billAmmount;  //  no discount
-            }
-
-            double AddditionalDiscount = Math.Round(billAmmount / 100) * 5; // 5$ discount for each 100$ on the bill.
-            discounted -= AddditionalDiscount;
-
-            return discounted;
-        }
 
    
 

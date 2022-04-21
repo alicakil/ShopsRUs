@@ -15,7 +15,6 @@ namespace Api.ViewModels
         {
             InvoiceVM invoicevm = new InvoiceVM(); // Return back only required fields, not all. So I use ViewModel.
             invoicevm.Id = invoice.Id;
-            invoicevm.CustomerName = invoice.Customer.Name;
             invoicevm.Ammount = invoice.Ammount;
             invoicevm.Discounted = invoice.Discounted;
             invoicevm.CustomMessage = CustomMessage;

@@ -21,16 +21,16 @@ namespace Api.Controllers
         [HttpGet("GetCustomers")]
         public async Task<IActionResult>GetCustomers()
         {
-             return Ok(await _Customers.GetCustomersAsync());
+             return Ok(_Customers.GetCustomers());
         }
 
         [HttpGet("GetCustomers/{id}")]
         public async Task<IActionResult> GetCustomerById(int id)
         {
-            return Ok(await _Customers.GetByIdAsnc(id));
+            return Ok(_Customers.GetById(id));
         }
 
-        [HttpPost]
+        [HttpPost("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer(Customer Customer)
         {
             try
@@ -38,7 +38,7 @@ namespace Api.Controllers
                 if (string.IsNullOrEmpty(Customer.Name))
                     return BadRequest("name can not be empty");
                
-                return Ok(await _Customers.CreateCustomerAsync(Customer));
+                return Ok( _Customers.CreateCustomer(Customer));
             }
             catch (Exception ex)
             {
