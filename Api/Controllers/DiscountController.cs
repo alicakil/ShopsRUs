@@ -4,16 +4,24 @@ using Api.Models;
 using Api.Repo;
 using Api.ViewModels;
 using Api.BusinessLogic;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Api.Controllers
 {
+    
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class DiscountController : ControllerBase
     {
+        private readonly IHostingEnvironment _env;
+
         ICustomerRepo _Customers;
         IInvoiceRepo _Invoices;
         ILogger<DiscountController> _logger;
+
+       
 
         public DiscountController(ICustomerRepo Customers, IInvoiceRepo invoiceRepo, ILogger<DiscountController> logger)
         {
@@ -144,6 +152,32 @@ namespace Api.Controllers
 
             return Ok(InvoiceVM.GetViewModel(invoice, "invoice information"));
         }
+
+        [HttpGet("ExportInvoices")]
+        public IActionResult ExportInvoices()
+        {
+            List<Invoice> invoices = _Invoices.GetAll();
+            
+
+            if (invoices == null)
+            {
+                return NotFound();
+            }
+            
+
+            var exportdata = invoices.Select(x=> new { x.Id, x.Customerid, x.Ammount, x.Discounted, x.CreateTime }).ToList();
+
+            Api.Library.Excel e = new Library.Excel();
+
+            ActionResult file = e.DownloadExcel("invoices", exportdata);
+            if (file == null)
+            {
+                return NotFound("file not found!");
+            }
+
+            return file;
+        }
+
 
 
 

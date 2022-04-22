@@ -36,7 +36,8 @@ namespace Api
                 c.Customers.Add(new Customer() { Name="Customer3", Password = "pass123123" });  // Not categorized
                 c.SaveChanges();
 
-                c.Invoices.Add(new Invoice() { Ammount=1000, Discounted=1000, Customerid=1, Statusid= InvoiceStatus.draft }); // sample invoce record
+                c.Invoices.Add(new Invoice() { Ammount=1000, Discounted=1000, Customerid=3, Statusid= InvoiceStatus.draft }); // sample invoce record
+                c.Invoices.Add(new Invoice() { Ammount=100, Discounted=200, Customerid=3, Statusid= InvoiceStatus.draft });   // sample invoce record
                 c.SaveChanges();
 
             }
