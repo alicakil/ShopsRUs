@@ -61,11 +61,13 @@ namespace Api.BusinessLogic
                     discounted = Idiscount.GetDiscount(billAmmount);
                 }
                 else
-                    discounted = billAmmount;  //  no discount
+                {
+                    discounted = billAmmount; 
+                    double AddditionalDiscount = Math.Round(billAmmount / 100) * 5; // 5$ discount for each 100$ on the bill.
+                    discounted -= AddditionalDiscount;
+                }
             }
 
-            double AddditionalDiscount = Math.Round(billAmmount / 100) * 5; // 5$ discount for each 100$ on the bill.
-            discounted -= AddditionalDiscount;
 
             return discounted;
         }

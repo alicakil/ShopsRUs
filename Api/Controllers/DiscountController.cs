@@ -31,7 +31,7 @@ namespace Api.Controllers
                 _logger.LogInformation(LogCategory.Start, "CreateBill triggered, Customerid:" + Customerid + ", billAmmount:" + billAmmount);
 
                 Context c = new Context();
-                Customer customer = _Customers.GetById(Customerid);
+                Customer customer =  _Customers.GetById(Customerid);
 
                 if (customer == null)
                     return NotFound("Customer not found");
@@ -56,13 +56,9 @@ namespace Api.Controllers
         }
 
 
-        
-
         [HttpPut("UpdateBillAmount")]
         public IActionResult UpdateBillAmount(int invoiceid, double billAmmount)
         {
-            Context c = new Context();
-
             Invoice invoice = _Invoices.GetById(invoiceid);
             Customer customer = _Customers.GetById(invoice.Customerid);
 
@@ -98,9 +94,7 @@ namespace Api.Controllers
         [HttpPut("IssueBill")]
         public IActionResult IssueBill(int Invoiceid)
         {
-            Context c = new Context();
-
-            Invoice invoice = c.Invoices.FirstOrDefault(x => x.Id == Invoiceid);
+            Invoice invoice = _Invoices.GetById(Invoiceid);
 
             if (invoice == null)
                 return NotFound("Customer not found");
@@ -122,8 +116,6 @@ namespace Api.Controllers
         [HttpPut("CancelBill")]
         public IActionResult CancelBill(int Invoiceid)
         {
-            Context c = new Context();
-
             Invoice invoice = _Invoices.GetById(Invoiceid);
 
             if (invoice == null)
@@ -140,9 +132,23 @@ namespace Api.Controllers
         }
 
 
+        [HttpPut("GetBill")]
+        public IActionResult GetInvoice(int Invoiceid)
+        {
+            Invoice invoice = _Invoices.GetById(Invoiceid);
+
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(InvoiceVM.GetViewModel(invoice, "Bill cancelled succesfully!"));
+        }
 
 
-   
+
+
+
 
     }
 }
