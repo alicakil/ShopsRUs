@@ -3,7 +3,7 @@
 <hr/>
 
 <b> Description </b> <br>
-This is a Resftful API service for showing some code practises based on requirepments descripbed in *.doc file. 
+This is a Resftful API service taht showing code practises based on requirepments descripbed in UserStory document file. 
 
 
 <h3> Usage </h3>
@@ -28,28 +28,23 @@ Build and Run the project. (I recomend Visiaul Studio 2022 Community)
 <hr>
 
 Restful API
-Entity Framework Core
-Repository Patern
-ilogger
-SOLID priciples
-
-
-
-Model Design
- -Data Annooations (Display, Range, MaxLength)
- -Regular expressions (password etc)
+Entity Framework Core<br>
+Repository Patern<br>
+ilogger<br>
+SOLID priciples<br>
+Data Annooations (Display, Range, MaxLength)<br>
+Regular expressions<br>
 
 
  <h3> Testing the Project   </h3>
  <hr>
- -Solution have UnitTest project
-	- Unit Tests (not fully covered yet..)
-	- Performance Test
-	- Integration Test
+ -Solution have UnitTest project<br>
+	- Unit Tests (not fully covered yet..)<br>
+	- Performance Test<br>
+	- Integration Test<br>
    
 
  -Injection & Penetration Tests
- -ddos attact test (high requests per sec from a same source)
  -Moq
  -Performance Test
  -Stress Test (multi thread)
@@ -58,8 +53,8 @@ Model Design
 
 <h3> Future Plans </h3>
 <hr>
- - Following paterns will be added: UnitOfWork, SingleTon, Builder 
- - login, sign up (Authentication)
- - password reset (send email)
- - Excel Export
- - Ref~Out, Overloading, method overriding (such as string), Extensions, Destructor (for garbage collector)
+ - Following paterns will be added: UnitOfWork, SingleTon, Builder <br>
+ - login, sign up (Authentication)<br>
+ - password reset (send email)<br>
+ - Excel Export<br>
+ - Ref~Out, Overloading, method overriding (such as string), Extensions, Destructor (for garbage collector)<br>
