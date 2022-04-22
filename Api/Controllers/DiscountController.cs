@@ -97,13 +97,13 @@ namespace Api.Controllers
             Invoice invoice = _Invoices.GetById(Invoiceid);
 
             if (invoice == null)
-                return NotFound("Customer not found");
+                return NotFound("Invoice not found");
 
             if(invoice.Statusid == InvoiceStatus.issued)
-                return UnprocessableEntity("This invoice is already issued!");
+                return BadRequest("This invoice is already issued!");
 
             if (invoice.Statusid == InvoiceStatus.cancelled)
-                return UnprocessableEntity("This invoice is cancelled. Please a create new one!");
+                return BadRequest("This invoice is cancelled. Please a create new one!");
 
             invoice.Statusid = InvoiceStatus.issued;
 
@@ -142,7 +142,7 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            return Ok(InvoiceVM.GetViewModel(invoice, "Bill cancelled succesfully!"));
+            return Ok(InvoiceVM.GetViewModel(invoice, "invoice information"));
         }
 
 
