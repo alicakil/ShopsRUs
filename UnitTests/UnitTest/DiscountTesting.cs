@@ -16,17 +16,11 @@ namespace UnitTests
 {
     public class DiscountTesting
     {
-        string API_URL = "https://localhost:7123/api";
 
         [SetUp]
         public void Setup() 
         {
-            // Database Connection Check...
-            Context c = new Context();
-            if (!c.Database.CanConnect())
-            {
-                Assert.Ignore("DB Conncetion Failed!");
-            }
+            
         }
 
 

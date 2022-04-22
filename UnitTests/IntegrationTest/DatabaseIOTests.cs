@@ -53,7 +53,7 @@ namespace UnitTests
 
 
         [Test]
-        [Order(11)] 
+        [Order(11)]
         public void IssueBill_whenDraft_MustBeIssued()
         {
             // arrange
@@ -64,7 +64,7 @@ namespace UnitTests
             var controller = new DiscountController(c, i, loggerStub.Object);
 
             // be sure Invoice is in drarft status before test
-            Invoice inv = ctx.Invoices.FirstOrDefault(x=>x.Id==1);
+            Invoice inv = ctx.Invoices.FirstOrDefault(x => x.Id == 1);
             inv.Statusid = InvoiceStatus.draft;
             ctx.Update(inv);
             ctx.SaveChanges();
@@ -77,6 +77,7 @@ namespace UnitTests
             Assert.IsNotNull(okResult);
             Assert.AreEqual(200, okResult.StatusCode);
         }
+
 
 
     }
