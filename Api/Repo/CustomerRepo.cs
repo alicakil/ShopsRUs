@@ -21,12 +21,12 @@ namespace Api.Repo
 
         public Customer GetById(int id)
         {
-            return _context.Customers.FirstOrDefault(x=>x.id == id);
+            return _context.Customers.AsNoTracking().FirstOrDefault(x=>x.id == id);
         }
 
         public List<Customer> GetCustomers()
         {
-            return _context.Customers.ToList();
+            return _context.Customers.AsNoTracking().ToList();
         }
     }
 }

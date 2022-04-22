@@ -28,12 +28,12 @@ namespace Api.Repo
 
         public Invoice GetById(int id)
         {
-            return _context.Invoices.FirstOrDefault(x=>x.Id == id);
+            return _context.Invoices.AsNoTracking().FirstOrDefault(x=>x.Id == id);
         }
 
         public List<Invoice> GetAll()
         {
-            return _context.Invoices.ToList();
+            return _context.Invoices.AsNoTracking().ToList();
         }
     }
 }

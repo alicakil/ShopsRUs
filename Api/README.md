@@ -8,44 +8,31 @@ This is a Resftful API service for showing some code practises based on requirep
 
 <h3> Usage </h3>
 <hr>
+Go to Api/Models/Context.cs file, provide a valid connection string such as local sql server for your machine.
+Build and Run the project. (I recomend Visiaul Studio 2022 Community)
 
 
 
 
-FEATURES
--login, sign up
--password reset (send email)
--create master data
--create transactional data
--bussiness logic (discounts)
+
+<h3> FEATURES </h3>
+-Customer
+	-To get customer data and create customer
+-Discount
+	- able to insert update or get invoice data
+	- Discounting algoritm based on rules as described in the UserStory document.
 
 
 
-Used technogies
-______________________________
+<h3> Used Technogies </h3>
+<hr>
 
 Restful API
-  -Differenct http status 200,404, etc.
-  -HTTP GET, PUT, DELETE
-  -JOSN RESULT, FileResult(Excel)
-  -NoAction
-  -Ascy Tasks
-
-
 Entity Framework Core
-  -lazy loading, include, where, select
-  -asno tracking
+Repository Patern
+ilogger
+SOLID priciples
 
-
-Paterns
--SingleTon
--Builder
--Repository
--UnitOfWork
-
-
-Language Features
- -const, readonly,List, Dictionary, Ref Out, Method Overloading, method overriding (such as string), Destructor (garbage collector), SOLID, ilogger
 
 
 Model Design
@@ -53,10 +40,26 @@ Model Design
  -Regular expressions (password etc)
 
 
-Tests
- -Unit Tests
+ <h3> Testing the Project   </h3>
+ <hr>
+ -Solution have UnitTest project
+	- Unit Tests (not fully covered yet..)
+	- Performance Test
+	- Integration Test
+   
+
  -Injection & Penetration Tests
  -ddos attact test (high requests per sec from a same source)
  -Moq
  -Performance Test
  -Stress Test (multi thread)
+
+
+
+<h3> Future Plans </h3>
+<hr>
+ - Following paterns will be added: UnitOfWork, SingleTon, Builder 
+ - login, sign up (Authentication)
+ - password reset (send email)
+ - Excel Export
+ - Ref~Out, Overloading, method overriding (such as string), Extensions, Destructor (for garbage collector)
