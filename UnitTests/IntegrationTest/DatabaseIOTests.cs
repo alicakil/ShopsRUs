@@ -28,7 +28,7 @@ namespace UnitTests
         }
 
         [Test]
-        [Order(1)] // run this first
+        [Order(10)]  
         [TestCase(1000, 404)] // not existing invoice
         [TestCase(-1000, 404)] // not existing invoice
         [TestCase(1, 200)] // existing invoice
@@ -49,5 +49,35 @@ namespace UnitTests
             Assert.IsNotNull(okResult);
             Assert.AreEqual(HttpResultCode, okResult.StatusCode);
         }
+
+
+
+        [Test]
+        [Order(11)] 
+        public void IssueBill_whenDraft_MustBeIssued()
+        {
+            // arrange
+            Context ctx = new Context(); // using real database connection.
+            CustomerRepo c = new CustomerRepo(ctx);
+            InvoiceRepo i = new InvoiceRepo(ctx);
+            var loggerStub = new Mock<ILogger<DiscountController>>();// we do integration test for datebase. so logger is not important here.
+            var controller = new DiscountController(c, i, loggerStub.Object);
+
+            // be sure Invoice is in drarft status before test
+            Invoice inv = ctx.Invoices.FirstOrDefault(x=>x.Id==1);
+            inv.Statusid = InvoiceStatus.draft;
+            ctx.Update(inv);
+            ctx.SaveChanges();
+
+            // act
+            IActionResult result = controller.IssueBill(1); // database testing based on demo records. (see demo data in alicakil.cs)
+            var okResult = (IStatusCodeActionResult)result;
+
+            // assert
+            Assert.IsNotNull(okResult);
+            Assert.AreEqual(200, okResult.StatusCode);
+        }
+
+
     }
 }
