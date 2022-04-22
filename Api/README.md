@@ -1,5 +1,16 @@
-﻿AppName : ShopsRUs Code Practises
-Author:  Ali CAKIL, alicakil78@gmail.com
+﻿<h1> ShopsRUs Code Practises </h1>
+<b> Author:  Ali CAKIL, alicakil78@gmail.com </b>
+<hr/>
+
+<b> Description </b> <br>
+This is a Resftful API service for showing some code practises based on requirepments descripbed in *.doc file. 
+
+
+<h3> Usage </h3>
+<hr>
+
+
+
 
 FEATURES
 -login, sign up
