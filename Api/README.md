@@ -19,9 +19,9 @@ Build and Run the project. (I recomend Visiaul Studio 2022 Community)
 
 
 <h3> FEATURES </h3>
--Customer<br>
+-<b>Customer</b><br>
 	-To get customer data and create customer<br>
--Discount<br>
+-<b>Discount</b><br>
 	- able to insert update or get invoice data<br>
 	- Discounting algoritm based on rules as described in the <a target='_blank' href='https://github.com/alicakil/ShopsRUs/blob/master/Api/UserStory.docx'> UserStory document.</a><br>
 	- Download Invoice list as xls file
