@@ -3,12 +3,12 @@
 <hr/>
 
 <b> Description </b> <br>
-This is a Resftful API service taht showing code practises based on requirepments descripbed in UserStory document file. 
+This is a Resftful API service taht showing code practises based on requirepments descripbed in  <a href='https://github.com/alicakil/ShopsRUs/blob/master/Api/UserStory.docx'> UserStory document.</a> document file. 
 
 
 <h3> Usage </h3>
 <hr>
-Go to Api/Models/Context.cs file, provide a valid connection string such as local sql server for your machine.
+Go to Api/Models/Context.cs file, provide a valid connection string such as local sql server for your machine.<br>
 Build and Run the project. (I recomend Visiaul Studio 2022 Community)
 
 
@@ -16,40 +16,34 @@ Build and Run the project. (I recomend Visiaul Studio 2022 Community)
 
 
 <h3> FEATURES </h3>
--Customer
-	-To get customer data and create customer
--Discount
-	- able to insert update or get invoice data
-	- Discounting algoritm based on rules as described in the UserStory document.
+-Customer<br>
+	-To get customer data and create customer<br>
+-Discount<br>
+	- able to insert update or get invoice data<br>
+	- Discounting algoritm based on rules as described in the <a href='https://github.com/alicakil/ShopsRUs/blob/master/Api/UserStory.docx'> UserStory document.</a><br>
 
 
 
-<h3> Used Technogies </h3>
+<h3> Used Technologies </h3>
 <hr>
 
-Restful API
+Restful API <br>
 Entity Framework Core<br>
+Model Controller ViewModel structure <br>
 Repository Patern<br>
 ilogger<br>
 SOLID priciples<br>
 Data Annooations (Display, Range, MaxLength)<br>
 Regular expressions<br>
-
+Moq
 
  <h3> Testing the Project   </h3>
  <hr>
- -Solution have UnitTest project<br>
+ -<b>Solution a have UnitTest project</b><br>
 	- Unit Tests (not fully covered yet..)<br>
 	- Performance Test<br>
 	- Integration Test<br>
    
-
- -Injection & Penetration Tests
- -Moq
- -Performance Test
- -Stress Test (multi thread)
-
-
 
 <h3> Future Plans </h3>
 <hr>
