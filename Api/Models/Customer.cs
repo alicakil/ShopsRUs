@@ -22,8 +22,8 @@ namespace Api.Models
 
         public int? TypeId { get; set; }
 
-        public CustomerType? Type { get; set; } 
+        public CustomerType? Type { get; set; }
 
-        IList<Invoice> Invoices { get; set; }
+        public IList<Invoice> Invoices { get; set; }
     }
 }

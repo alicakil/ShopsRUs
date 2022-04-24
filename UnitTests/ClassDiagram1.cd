@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Api.Models.Customer">
+    <Position X="8.25" Y="3" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Api.Models.CustomerType">
+    <Position X="10.75" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.Models.InvoiceStatus">
+    <Position X="3.5" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.Models.Invoice">
+    <Position X="6" Y="3" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Status" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Api.Models.LogCategory" Collapsed="true">
+    <Position X="12.75" Y="5" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.Models.BaseTable">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.Models.Context">
+    <Position X="16.75" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.BusinessLogic.DiscountLogic">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.Repo.CustomerRepo" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.114" Collapsed="true" />
+  </Class>
+  <Class Name="Api.Repo.InvoiceRepo" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="Api.Controllers.DiscountController">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.Controllers.CustomerController">
+    <Position X="0.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Api.alicakil">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="Api.Repo.ICustomerRepo">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Api.Repo.IInvoiceRepo">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
