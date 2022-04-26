@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Api
 {
+
     public class alicakil
     {
         private static alicakil ali;
