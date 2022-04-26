@@ -34,6 +34,7 @@ Restful API <br>
 Entity Framework Core<br>
 Model Controller ViewModel structure <br>
 Repository Patern<br>
+SingleTon Patern <br>
 ilogger<br>
 SOLID priciples<br>
 Data Annooations (Display, Range, MaxLength)<br>
@@ -51,7 +52,7 @@ ClosedXML (Excel file download) <br>
 
 <h3> Future Plans </h3>
 <hr>
- - Following paterns will be added: UnitOfWork, SingleTon, Builder <br>
+ - Following paterns will be added: UnitOfWork, Builder <br>
  - login, sign up (Authentication)<br>
  - password reset (send email)<br>
  - Ref~Out, Overloading, method overriding (such as string), Extensions, Destructor (for garbage collector)<br>

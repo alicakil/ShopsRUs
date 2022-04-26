@@ -28,12 +28,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
-alicakil ali = new alicakil();
+alicakil ali = alicakil.GetSingleTon();
 ali.CreateDatabase();
 
 app.Run();

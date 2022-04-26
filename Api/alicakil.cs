@@ -7,6 +7,21 @@ namespace Api
 {
     public class alicakil
     {
+        private static alicakil ali;
+
+        private alicakil() // if its public then signleton will not work.
+        {
+
+        }
+
+        public static alicakil GetSingleTon()
+        {
+            if (ali==null)
+                ali = new alicakil();
+
+            return ali;
+        }
+
         public void CreateDatabase()
         {
             Context c = new Context();
